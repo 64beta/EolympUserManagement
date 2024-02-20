@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-olymp User Management</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="shortcut icon" href="https://www.eolymp.com/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap">
+
+</head>
+
+<body>
+  <header>
+    <h1>E-olymp User Management</h1>
+  </header>
+
+  <main>
+    <div class="input-container" id="inputContainer">
+      <form id="myForm" method="post" action="{% url 'eliminate' %}">
+        {% csrf_token %}
+        <input type="text" id="coreInput" name="coreInput" placeholder="Core" required />
+        <input type="text" id="targetInput" name="targetInput" placeholder="Target" required />
+        <button id="eliminateButton">Response</button>
+      </form>
+
+      <section class="notifications">
+        <div class="notification-item">
+          <p>{{ notification_message }}</p>
+        </div>
+        <div class="links">
+          <a href="/about">About</a>
+          <a href="/analysis">Analysis</a>
+        </div>
+      </section>
+    </div>
+
+
+    <div class="links-container">
+      <div class="link-count">
+        <p>
+          Total Links: <span id="linkCount">0</span>
+        </p>
+        <div class="action-buttons">
+          <button class="core-button" onclick="copyLinks()">Copy Links</button>
+        </div>
+      </div>
+
+      <ul class="link-list">
+        {% for link in links %}
+        <li class="link-list-item">
+          <a href="{{ link.url }}" target="_blank">Problem {{ link.index }}</a>
+          <span>{{ link.index }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </main>
+
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
